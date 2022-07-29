@@ -14,6 +14,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "no-underscore-dangle": "off",
     "react/no-array-index-key": "off",
     "react/jsx-no-constructed-context-values": "off",
     "no-alert":"off",

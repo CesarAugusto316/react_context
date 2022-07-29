@@ -15,15 +15,15 @@ export const Todos: FC = () => {
       xyz="fade up-100% ease-in-out-back"
       className="todos-list"
     >
-      {todosList.map((todo, index) => {
+      {todosList.map((item) => {
         return (
-          <div key={index} className="todo-item">
+          <div key={item._id} className="todo-item">
             <div className="todo-item__text">
-              <p>{todo}</p>
+              <p>{item.todo}</p>
             </div>
             <FaTrashAlt
               className="todo-item__icon"
-              onClick={() => onDeleteTodo(index)}
+              onClick={() => onDeleteTodo(item._id)}
             />
           </div>
         );
