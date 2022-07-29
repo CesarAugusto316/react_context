@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 import {
   FC, createContext, useReducer, ReactNode, useContext,
   Reducer, MouseEventHandler,

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { FC } from 'react';
 import '@animxyz/core';
 import { XyzTransitionGroup } from '@animxyz/react';

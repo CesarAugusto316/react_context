@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import { FC, FormEventHandler, useState } from 'react';
 import './formInput.css';
 import { useTodos } from '../../context';

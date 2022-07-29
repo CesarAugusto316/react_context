@@ -1,6 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-no-constructed-context-values */
 import {
   FC, createContext, useState, ReactNode, useContext,
 } from 'react';
