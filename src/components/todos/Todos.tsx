@@ -7,7 +7,7 @@ import { useTodos } from '../../context';
 
 
 export const Todos: FC = () => {
-  const { todosList, onDeleteTodo } = useTodos();
+  const { allTodos, onDeleteTodo } = useTodos();
 
   return (
     <XyzTransitionGroup
@@ -15,7 +15,7 @@ export const Todos: FC = () => {
       xyz="fade up-100% ease-in-out-back"
       className="todos-list"
     >
-      {todosList.map((item) => {
+      {allTodos.map((item) => {
         return (
           <div key={item._id} className="todo-item">
             <div className="todo-item__text">

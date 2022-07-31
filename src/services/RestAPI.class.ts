@@ -1,16 +1,20 @@
 import axios from 'axios';
-import type { ToDo } from '../context/TodosProvider';
+import type { ToDo } from '../context/todosReducer';
 
+
+interface Data {
+  allTodos: ToDo[],
+  todo: ToDo
+}
 
 export class RestAPI {
   #apiUrl = import.meta.env.VITE_TODOS_API_URL;
 
-  getAllTodos() {
-    return new Promise<ToDo[]>((resolve, reject) => {
+  getAll() {
+    return new Promise<Data>((resolve, reject) => {
       axios.get(this.#apiUrl)
         .then(({ data }) => {
-          const todos:ToDo[] = data.allTodos;
-          resolve(todos);
+          resolve(data);
         })
         .catch((error) => {
           reject(error);
@@ -18,16 +22,11 @@ export class RestAPI {
     });
   }
 
-  getTodoById(id:string) {
-    return new Promise<ToDo>((resolve, reject) => {
-      axios.get(this.#apiUrl, {
-        params: {
-          id,
-        },
-      })
+  getById(id:string) {
+    return new Promise<Data>((resolve, reject) => {
+      axios.get(`${this.#apiUrl}/${id}`)
         .then(({ data }) => {
-          const { todo } = data;
-          resolve(todo as ToDo);
+          resolve(data);
         })
         .catch((error) => {
           reject(error);
@@ -35,8 +34,8 @@ export class RestAPI {
     });
   }
 
-  createTodo(todo: string) {
-    return new Promise<{allTodos: ToDo[], todo: ToDo}>((resolve, reject) => {
+  create(todo: string) {
+    return new Promise<Data>((resolve, reject) => {
       axios.post(this.#apiUrl, {
         todo: todo.trim(),
       })
@@ -49,9 +48,26 @@ export class RestAPI {
     });
   }
 
-  deleteTodo(id:string) {
-    return new Promise<{allTodos: ToDo[], todo: null}>((resolve, reject) => {
+  delete(id:string) {
+    return new Promise<Data>((resolve, reject) => {
       axios.delete(`${this.#apiUrl}/${id}`, {
+        headers: {
+          Accept: '*/*',
+          Authorization: '***',
+        },
+      })
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  update(id:string) {
+    return new Promise<Data>((resolve, reject) => {
+      axios.patch(`${this.#apiUrl}/${id}`, {
         headers: {
           Accept: '*/*',
           Authorization: '***',

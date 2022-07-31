@@ -1,20 +1,24 @@
 import { FC } from 'react';
-import { ThemeProvider, TodosProvider } from './context';
-import { Navbar, FormInput, Todos } from './components';
+import { ThemeProvider, useTodos } from './context';
+import {
+  Navbar, FormInput, Todos, Spinner,
+} from './components';
 
 
 export const App: FC = () => {
+  const { isLoaded } = useTodos();
+
   return (
     <ThemeProvider>
-      <TodosProvider>
-        <Navbar />
-        <section className="section">
-          <main className="main">
-            <FormInput />
-            <Todos />
-          </main>
-        </section>
-      </TodosProvider>
+      <Navbar />
+      <section className="section">
+        <main className="main">
+          <FormInput />
+          {isLoaded
+            ? <Todos />
+            : <Spinner />}
+        </main>
+      </section>
     </ThemeProvider>
   );
 };

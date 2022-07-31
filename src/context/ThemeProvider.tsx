@@ -20,7 +20,7 @@ export const useTheme = () => {
   return useContext(Context);
 };
 
-const reducer:Reducer<Theme, string> = (state, action) => {
+const themeReducer:Reducer<Theme, string> = (state, action) => {
   switch (action) {
     case 'light':
       return {
@@ -63,7 +63,7 @@ const initialTheme = (): Theme => {
  * save our preferred one to localStorage.
  */
 export const ThemeProvider: FC<{children: ReactNode}> = ({ children }) => {
-  const [theme, setTheme] = useReducer(reducer, initialTheme());
+  const [theme, setTheme] = useReducer(themeReducer, initialTheme());
 
   const onToggleThemeHandler: MouseEventHandler = () => {
     if (theme.light) {

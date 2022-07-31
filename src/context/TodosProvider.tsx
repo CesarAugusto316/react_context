@@ -1,16 +1,16 @@
 import {
-  FC, createContext, useState, ReactNode, useContext, useEffect,
+  FC, createContext, ReactNode, useContext, useEffect, useReducer,
 } from 'react';
 import { RestAPI } from '../services/RestAPI.class';
+import { actionCreators, initialState, todosReducer } from './todosReducer';
+import type { ToDo } from './todosReducer';
 
-
-export interface ToDo {
-  todo: string,
-  _id: string,
-}
 
 interface ContextProps {
-  todosList: ToDo[],
+  allTodos: ToDo[],
+  lastTodo: ToDo,
+  isLoaded: boolean,
+  error: string,
   onAppendTodo(inputValue:string):void,
   onDeleteTodo(id:string):void,
 }
@@ -21,9 +21,14 @@ export const useTodos = () => {
   return useContext(Context);
 };
 
+const toDosService = new RestAPI();
+
+const {
+  fetchStart, fetchSuccess, fetchFail, deleteTodo, createTodo,
+} = actionCreators;
+
 export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
-  const [todosList, setTodosList] = useState<ToDo[]>([]);
-  const todosService = new RestAPI();
+  const [todos, dispatch] = useReducer(todosReducer, initialState);
 
   /**
    *
@@ -31,46 +36,42 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
    */
   const onAppendTodo = async (inputValue:string) => {
     try {
-      const { todo } = await todosService.createTodo(inputValue);
-
-      // if todo was added to DB we render it on the UI.
+      const { todo } = await toDosService.create(inputValue);
       if (todo) {
-        setTodosList((state) => {
-          return [
-            ...state, todo,
-          ];
-        });
+        dispatch(createTodo(todo));
       }
     } catch (error) {
+      dispatch(fetchFail(error as string));
       alert(error);
     }
   };
 
   const onDeleteTodo = async (id: string) => {
     try {
-      const { todo } = await todosService.deleteTodo(id);
-
-      // once deleted from database we delete it from UI.
+      const { todo } = await toDosService.delete(id); // deletes from server
       if (todo === null) {
-        setTodosList((state) => {
-          return state.filter((item) => item._id !== id);
-        });
+        dispatch(deleteTodo(id)); // deletes from UI
       }
     } catch (error) {
-      console.log(error);
+      dispatch(fetchFail(error as string));
+      alert(error);
     }
   };
 
   useEffect(() => {
-    todosService.getAllTodos()
-      .then((todos) => {
-        setTodosList(todos);
-        console.log(todos);
+    dispatch(fetchStart());
+
+    toDosService.getAll()
+      .then(({ allTodos }) => {
+        dispatch(fetchSuccess(allTodos));
+      })
+      .catch((error) => {
+        dispatch(fetchFail(error));
       });
   }, []);
 
   return (
-    <Context.Provider value={{ todosList, onDeleteTodo, onAppendTodo }}>
+    <Context.Provider value={{ ...todos, onDeleteTodo, onAppendTodo }}>
       {children}
     </Context.Provider>
   );
