@@ -21,7 +21,11 @@ export const App: FC = () => {
             : <Spinner />}
         </main>
       </section>
-      <ToastContainer position="top-left" autoClose={1_100} theme={theme.light ? 'light' : 'dark'} />
+      <ToastContainer
+        position="top-left"
+        autoClose={1_100}
+        theme={theme.light ? 'light' : 'dark'}
+      />
     </>
   );
 };

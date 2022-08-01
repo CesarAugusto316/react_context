@@ -98,6 +98,7 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
       })
       .catch((error) => {
         dispatch(fetchFail(error));
+        toast.error(todos.error);
       });
   }, []);
 

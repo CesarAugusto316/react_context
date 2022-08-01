@@ -50,7 +50,6 @@
 }
 
 #app {
-  position: relative;
   font-family: var(--font-family);
   color: var(--base-content);
   font-size: 1.6rem;
