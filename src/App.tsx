@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { ThemeProvider, useTodos } from './context';
+import { ToastContainer } from 'react-toastify';
+import { useTheme, useTodos } from './context';
 import {
   Navbar, FormInput, TodosList, Spinner,
 } from './components';
@@ -7,9 +8,10 @@ import {
 
 export const App: FC = () => {
   const { isLoaded } = useTodos();
+  const { theme } = useTheme();
 
   return (
-    <ThemeProvider>
+    <>
       <Navbar />
       <section className="section">
         <main className="main">
@@ -19,6 +21,7 @@ export const App: FC = () => {
             : <Spinner />}
         </main>
       </section>
-    </ThemeProvider>
+      <ToastContainer position="top-left" autoClose={1_100} theme={theme.light ? 'light' : 'dark'} />
+    </>
   );
 };

@@ -1,6 +1,6 @@
 import {
   FC, createContext, useReducer, ReactNode, useContext,
-  Reducer, MouseEventHandler,
+  Reducer, MouseEventHandler, useEffect,
 } from 'react';
 
 
@@ -13,12 +13,6 @@ interface ContextProps {
   theme: Theme
   onToggleThemeHandler: MouseEventHandler
 }
-
-const Context = createContext({} as ContextProps);
-
-export const useTheme = () => {
-  return useContext(Context);
-};
 
 const themeReducer: Reducer<Theme, string> = (state, action) => {
   switch (action) {
@@ -45,7 +39,9 @@ const initialTheme = (): Theme => {
       light: true,
       dark: false,
     };
-  } if (preferredTheme === 'dark') {
+  }
+
+  if (preferredTheme === 'dark') {
     return {
       light: false,
       dark: true,
@@ -55,6 +51,12 @@ const initialTheme = (): Theme => {
     light: true,
     dark: false,
   };
+};
+
+const Context = createContext({} as ContextProps);
+
+export const useTheme = () => {
+  return useContext(Context);
 };
 
 /**

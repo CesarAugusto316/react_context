@@ -27,7 +27,7 @@
   font-family: var(--font-family);
   display: block;
   width: 100%;
-  caret-color: var(--primary);
+  caret-color: var(--base-content);
   text-indent: 0.8rem;
 }
 

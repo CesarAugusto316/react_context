@@ -1,6 +1,7 @@
 import {
   FC, createContext, ReactNode, useContext, useEffect, useReducer,
 } from 'react';
+import { toast } from 'react-toastify';
 import { RestAPI } from '../services/RestAPI.class';
 import { actionCreators, initialState, todosReducer } from './todosReducer';
 import type { ToDo } from './todosReducer';
@@ -37,13 +38,16 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
    * updating the UI.
    */
   const onAppendTodo = async (inputValue:string) => {
+    let myToast;
     try {
       const { todo } = await toDosService.create(inputValue); // appends to the server
       if (todo) {
+        myToast = toast.success('Creating todo...');
         dispatch(createTodo(todo)); // apppends to the UI
       }
     } catch (error) {
-      alert(`<${inputValue}> already exists!`);
+      toast.dismiss(myToast);
+      toast.error('Todo already exists!');
     }
   };
 
@@ -53,6 +57,7 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
    * updating the UI.
    */
   const onDeleteTodo = async (id: string) => {
+    const myToast = toast.success('Deleting...');
     try {
       const { todo } = await toDosService.delete(id); // deletes from server
       if (todo === null) {
@@ -60,7 +65,8 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
       }
     } catch (error) {
       dispatch(fetchFail(error as string));
-      alert(error);
+      toast.dismiss(myToast);
+      toast.error('there was an error deleting');
     }
   };
 
@@ -70,6 +76,7 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
    * updating the UI.
    */
   const onUpdateTodo = async (id: string, todoValue: string, completed: boolean) => {
+    const myToast = toast.success('Saving...');
     try {
       const { todo } = await toDosService.update(id, todoValue, completed);
       if (todo) {
@@ -77,7 +84,8 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
       }
     } catch (error) {
       dispatch(fetchFail(error as string));
-      alert(error);
+      toast.dismiss(myToast);
+      toast.error('there was an error updating');
     }
   };
 
