@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { ToDo } from '../context/todosReducer';
 
 
@@ -7,6 +7,11 @@ interface Data {
   todo: ToDo
 }
 
+/**
+ *
+ * @description if we get to need more than two services we can
+ * create more subclasses.
+ */
 export class RestAPI {
   #apiUrl = import.meta.env.VITE_TODOS_API_URL;
 
@@ -16,7 +21,7 @@ export class RestAPI {
         .then(({ data }) => {
           resolve(data);
         })
-        .catch((error) => {
+        .catch((error: AxiosError) => {
           reject(error);
         });
     });
@@ -28,7 +33,7 @@ export class RestAPI {
         .then(({ data }) => {
           resolve(data);
         })
-        .catch((error) => {
+        .catch((error: AxiosError) => {
           reject(error);
         });
     });
@@ -50,12 +55,7 @@ export class RestAPI {
 
   delete(id:string) {
     return new Promise<Data>((resolve, reject) => {
-      axios.delete(`${this.#apiUrl}/${id}`, {
-        headers: {
-          Accept: '*/*',
-          Authorization: '***',
-        },
-      })
+      axios.delete(`${this.#apiUrl}/${id}`)
         .then(({ data }) => {
           resolve(data);
         })
@@ -74,7 +74,7 @@ export class RestAPI {
         .then(({ data }) => {
           resolve(data);
         })
-        .catch((error) => {
+        .catch((error: AxiosError) => {
           reject(error);
         });
     });

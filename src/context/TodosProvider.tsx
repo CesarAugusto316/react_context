@@ -33,7 +33,8 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
 
   /**
    *
-   * @description we should create a todo in database
+   * @description we create a todo in database first before
+   * updating the UI.
    */
   const onAppendTodo = async (inputValue:string) => {
     try {
@@ -42,11 +43,15 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
         dispatch(createTodo(todo)); // apppends to the UI
       }
     } catch (error) {
-      dispatch(fetchFail(error as string));
-      alert(error);
+      alert(`<${inputValue}> already exists!`);
     }
   };
 
+  /**
+   *
+   * @description we delete a todo in database first before
+   * updating the UI.
+   */
   const onDeleteTodo = async (id: string) => {
     try {
       const { todo } = await toDosService.delete(id); // deletes from server
@@ -59,14 +64,21 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
     }
   };
 
+  /**
+   *
+   * @description we update a todo in database first before
+   * updating the UI.
+   */
   const onUpdateTodo = async (id: string, todoValue: string, completed: boolean) => {
     try {
       const { todo } = await toDosService.update(id, todoValue, completed);
       if (todo) {
-        console.log('UI is already updated', todo);
+        dispatch(updateTodo(id)); // not really necesary, react is reactive!
+        console.log('ui updated', todo);
       }
     } catch (error) {
-      console.log(error);
+      dispatch(fetchFail(error as string));
+      alert(error);
     }
   };
 

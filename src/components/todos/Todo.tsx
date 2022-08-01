@@ -5,15 +5,15 @@ import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import { useTodos } from '../../context';
 
 
-interface TodoInputProps {
+interface TodoProps {
   id: string,
   todo: string,
   completed: boolean
 }
 
-export const TodoInput: FC<TodoInputProps> = ({ id, todo, completed }) => {
+export const Todo: FC<TodoProps> = ({ id, todo, completed }) => {
   const { onDeleteTodo, onUpdateTodo } = useTodos();
-  const [toggle, setToggle] = useReducer((state) => !state, false);
+  const [toggleEditor, setToggleEditor] = useReducer((state) => !state, false);
   const [inputValue, setInputValue] = useState(todo);
   const [completeTodo, setCompleteTodo] = useReducer((state) => !state, completed);
 
@@ -21,15 +21,15 @@ export const TodoInput: FC<TodoInputProps> = ({ id, todo, completed }) => {
     if (e.key === 'Escape' || e.key === 'Enter') {
       e.target.blur();
       onUpdateTodo(id, inputValue, completeTodo);
-      setToggle();
+      setToggleEditor();
     }
   };
 
   const onClickHandler: MouseEventHandler = () => {
-    if (toggle === true) {
+    if (toggleEditor === true) {
       onUpdateTodo(id, inputValue, completeTodo);
     }
-    setToggle();
+    setToggleEditor();
   };
 
   const onSetCompletedHandler: MouseEventHandler = () => {
@@ -40,7 +40,7 @@ export const TodoInput: FC<TodoInputProps> = ({ id, todo, completed }) => {
   return (
     <>
       <div className="todo-item__text">
-        {toggle
+        {toggleEditor
           ? (
             <input
               id={`input-todo-${id}`}
@@ -64,12 +64,11 @@ export const TodoInput: FC<TodoInputProps> = ({ id, todo, completed }) => {
       </div>
 
       <span className="todo-item__icons-container">
-        <label htmlFor={`input-todo-${id}`}>
+        <label htmlFor={`input-todo-${id}`} onClick={onClickHandler}>
           <FaEdit
-            className={`todo-item__icon 
-            ${toggle && ' todo-item__icon--accent '} 
+            className={`todo-item__icon
+            ${toggleEditor && ' todo-item__icon--accent '}
             todo-item__icon--edit`}
-            onClick={onClickHandler}
           />
         </label>
         <FaTrashAlt

@@ -126,12 +126,7 @@ export const todosReducer: Reducer<ToDosState, Action> = (state, action) => {
     }
 
     case actionTypes.UPDATE_TODO: {
-      return {
-        ...state,
-        error: '',
-        isLoaded: true,
-        allTodos: state.allTodos,
-      };
+      return state;
     }
 
     case actionTypes.DELETE_TODO: {
