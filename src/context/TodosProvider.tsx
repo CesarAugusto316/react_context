@@ -11,8 +11,9 @@ interface ContextProps {
   lastTodo: ToDo,
   isLoaded: boolean,
   error: string,
-  onAppendTodo(inputValue:string):void,
-  onDeleteTodo(id:string):void,
+  onAppendTodo(inputValue : string) : void,
+  onDeleteTodo(id : string) : void,
+  onUpdateTodo(id : string, todoValue: string, completed: boolean) : void
 }
 
 const Context = createContext({} as ContextProps);
@@ -24,7 +25,7 @@ export const useTodos = () => {
 const toDosService = new RestAPI();
 
 const {
-  fetchStart, fetchSuccess, fetchFail, deleteTodo, createTodo,
+  fetchStart, fetchSuccess, fetchFail, deleteTodo, createTodo, updateTodo,
 } = actionCreators;
 
 export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
@@ -36,9 +37,9 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
    */
   const onAppendTodo = async (inputValue:string) => {
     try {
-      const { todo } = await toDosService.create(inputValue);
+      const { todo } = await toDosService.create(inputValue); // appends to the server
       if (todo) {
-        dispatch(createTodo(todo));
+        dispatch(createTodo(todo)); // apppends to the UI
       }
     } catch (error) {
       dispatch(fetchFail(error as string));
@@ -58,6 +59,17 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
     }
   };
 
+  const onUpdateTodo = async (id: string, todoValue: string, completed: boolean) => {
+    try {
+      const { todo } = await toDosService.update(id, todoValue, completed);
+      if (todo) {
+        console.log('UI is already updated', todo);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     dispatch(fetchStart());
 
@@ -71,7 +83,10 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
   }, []);
 
   return (
-    <Context.Provider value={{ ...todos, onDeleteTodo, onAppendTodo }}>
+    <Context.Provider value={{
+      ...todos, onDeleteTodo, onAppendTodo, onUpdateTodo,
+    }}
+    >
       {children}
     </Context.Provider>
   );

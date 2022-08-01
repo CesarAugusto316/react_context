@@ -65,13 +65,11 @@ export class RestAPI {
     });
   }
 
-  update(id:string) {
+  update(id:string, todo:string, completed:boolean) {
     return new Promise<Data>((resolve, reject) => {
       axios.patch(`${this.#apiUrl}/${id}`, {
-        headers: {
-          Accept: '*/*',
-          Authorization: '***',
-        },
+        todo: todo.trim(),
+        completed,
       })
         .then(({ data }) => {
           resolve(data);

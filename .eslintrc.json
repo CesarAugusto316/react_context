@@ -14,6 +14,8 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "no-underscore-dangle": "off",
     "react/no-array-index-key": "off",
     "react/jsx-no-constructed-context-values": "off",

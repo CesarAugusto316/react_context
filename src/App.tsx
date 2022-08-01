@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ThemeProvider, useTodos } from './context';
 import {
-  Navbar, FormInput, Todos, Spinner,
+  Navbar, FormInput, TodosList, Spinner,
 } from './components';
 
 
@@ -15,7 +15,7 @@ export const App: FC = () => {
         <main className="main">
           <FormInput />
           {isLoaded
-            ? <Todos />
+            ? <TodosList />
             : <Spinner />}
         </main>
       </section>
