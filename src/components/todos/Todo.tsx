@@ -71,10 +71,11 @@ export const Todo: FC<TodoProps> = ({ id, todo, completed }) => {
             todo-item__icon--edit`}
           />
         </label>
-        <FaTrashAlt
-          className="todo-item__icon"
-          onClick={() => onDeleteTodo(id)}
-        />
+        <label onClick={() => onDeleteTodo(id)}>
+          <FaTrashAlt
+            className="todo-item__icon"
+          />
+        </label>
       </span>
     </>
   );

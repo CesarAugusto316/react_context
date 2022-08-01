@@ -1,28 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-/*
-* -> 20 Most Used & Free sans-serif fonts (only change --font-family) <-
-*
-* Nunito
-* Poppins
-* Roboto
-* Monstserrat
-* Lato
-* PT Sans
-* Open Sans
-* Source Sans Pro
-* Exo
-* Exo 2
-* Rubik  //cheerfull
-* Ubuntu
-* Libre Franklin  //serious
-* Raleway  //elegant
-* Istok Web
-* Nobile
-* Dosis
-* Work Sans
-* Oswald // serious
-* Cambay
-*/
+
 :root {
   font-size: 62.5%;
   box-sizing: border-box;

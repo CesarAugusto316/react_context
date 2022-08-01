@@ -28,6 +28,7 @@
   display: block;
   width: 100%;
   caret-color: var(--primary);
+  text-indent: 0.8rem;
 }
 
 .todo-item__input:focus {
@@ -46,12 +47,21 @@
   text-decoration-color: var(--base-content);
 }
 
+.todo-item__text-content {
+  text-indent: 0.8rem;
+}
+
 .todo-item__text-content:hover {
   cursor: pointer;
 }
 .todo-item__icons-container {
   display: flex;
   gap: 1.8rem;
+  align-items: center;
+}
+
+.todo-item__icons-container > * {
+  display: flex;
   align-items: center;
 }
 
@@ -72,5 +82,5 @@
 
 .todo-item__icon:hover {
   color: var(--primary-focus);
-  transform: scale(1.2);
+  transform: scale(1.35);
 }

@@ -74,7 +74,6 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
       const { todo } = await toDosService.update(id, todoValue, completed);
       if (todo) {
         dispatch(updateTodo(id)); // not really necesary, react is reactive!
-        console.log('ui updated', todo);
       }
     } catch (error) {
       dispatch(fetchFail(error as string));
