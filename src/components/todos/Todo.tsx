@@ -40,27 +40,28 @@ export const Todo: FC<TodoProps> = ({ id, todo, completed }) => {
   return (
     <>
       <div className="todo-item__text">
-        {toggleEditor
-          ? (
-            <input
-              id={`input-todo-${id}`}
-              className="todo-item__input"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={onInputHandler}
-              type="text"
-              name={`input-${id}`}
-            />
-          )
-          : (
-            <p
-              className={`${completeTodo && 'line-through '} 
+        {/* IF */}
+        {toggleEditor === true && (
+        <input
+          id={`input-todo-${id}`}
+          className="todo-item__input"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={onInputHandler}
+          type="text"
+          name={`input-${id}`}
+        />
+        )}
+        {/* ELSE */}
+        {toggleEditor === false && (
+        <p
+          className={`${completeTodo && 'line-through '} 
               todo-item__text-content`}
-              onClick={onSetCompletedHandler}
-            >
-              {inputValue}
-            </p>
-          )}
+          onClick={onSetCompletedHandler}
+        >
+          {inputValue}
+        </p>
+        )}
       </div>
 
       <span className="todo-item__icons-container">

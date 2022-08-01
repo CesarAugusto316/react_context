@@ -20,7 +20,7 @@ export const useTheme = () => {
   return useContext(Context);
 };
 
-const themeReducer:Reducer<Theme, string> = (state, action) => {
+const themeReducer: Reducer<Theme, string> = (state, action) => {
   switch (action) {
     case 'light':
       return {
@@ -37,7 +37,7 @@ const themeReducer:Reducer<Theme, string> = (state, action) => {
   }
 };
 
-const preferredTheme:string|null = localStorage.getItem('toDoApp-theme');
+const preferredTheme: string|null = localStorage.getItem('toDoApp-theme');
 
 const initialTheme = (): Theme => {
   if (preferredTheme === 'light') {

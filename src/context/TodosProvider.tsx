@@ -11,9 +11,9 @@ interface ContextProps {
   lastTodo: ToDo,
   isLoaded: boolean,
   error: string,
-  onAppendTodo(inputValue : string) : void,
-  onDeleteTodo(id : string) : void,
-  onUpdateTodo(id : string, todoValue: string, completed: boolean) : void
+  onAppendTodo(inputValue: string) : void,
+  onDeleteTodo(id: string) : void,
+  onUpdateTodo(id: string, todoValue: string, completed: boolean) : void
 }
 
 const Context = createContext({} as ContextProps);
