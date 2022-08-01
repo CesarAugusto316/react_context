@@ -96,9 +96,9 @@ export const TodosProvider: FC<{children: ReactNode}> = ({ children }) => {
       .then(({ allTodos }) => {
         dispatch(fetchSuccess(allTodos));
       })
-      .catch((error) => {
-        dispatch(fetchFail(error));
-        toast.error(todos.error);
+      .catch(() => {
+        dispatch(fetchFail('fail to fetched'));
+        toast.error('fail to fetched');
       });
   }, []);
 
